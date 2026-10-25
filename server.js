@@ -22,13 +22,13 @@ if (!GEMINI_API_KEY) {
 }
 
 const GEMINI_URL = (model) =>
-  `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${GEMINI_API_KEY}`;
+  `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`;
 
 // ---- Call Gemini, return array of {mimeType, base64} images ----
 async function callGemini(parts) {
   const resp = await fetch(GEMINI_URL(MODEL), {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: { "Content-Type": "application/json", "x-goog-api-key": GEMINI_API_KEY },
     body: JSON.stringify({ contents: [{ parts }] }),
   });
   if (!resp.ok) {
